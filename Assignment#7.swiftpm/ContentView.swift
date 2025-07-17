@@ -9,12 +9,25 @@ struct ContentView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
 
+
     let customBackground = Color(red: 0.95, green: 0.9, blue: 0.85) // Custom color
 
     var body: some View {
         NavigationView {
             ScrollView { //  Layout for both orientations
-              
+                VStack(spacing: 20) {
+                    Text("MyRestaurant")
+                        .font(.custom("AvenirNext-Bold", size: 32)) // Example custom font
+                        .padding(.top, 10)
+                    
+                    // Reservation image
+                    Image(systemName: "fork.knife") // Replace with your own asset image if you want
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 100)
+                        .padding(.bottom, 10)
+                }
+
             }
             .background(customBackground.ignoresSafeArea())
             .alert(isPresented: $showAlert) {
