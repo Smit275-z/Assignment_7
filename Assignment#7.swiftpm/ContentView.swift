@@ -8,21 +8,20 @@ struct ContentView: View {
     @State private var selectedMeal = "Breakfast"
     @State private var showAlert = false
     @State private var alertMessage = ""
-    
-    
+
     let meals = ["Breakfast", "Lunch", "Dinner"]
     let customBackground = Color(red: 0.95, green: 0.9, blue: 0.85) // Example custom color
-    
+
     var body: some View {
         NavigationView {
-            ScrollView { // Makes layout work well in both orientations
+            ScrollView { // layout for both orientations
                 VStack(spacing: 20) {
                     
                     // Restaurant name with custom font
                     Text("MyRestaurant")
                         .font(.custom("AvenirNext-Bold", size: 32)) // Example custom font
                         .padding(.top, 10)
-                    
+
                     // Reservation image
                     Image(systemName: "fork.knife") // Replace with your own asset image if you want
                         .resizable()
@@ -41,14 +40,14 @@ struct ContentView: View {
                         TextField("Phone", text: $phone)
                             .keyboardType(.phonePad)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
-                        
+
                         Picker("Number of People", selection: $numberOfPeople) {
                             ForEach(1...10, id: \.self) { num in
                                 Text("\(num)")
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
-                        
+
                         // Segmented picker for meal type
                         Picker("Meal", selection: $selectedMeal) {
                             ForEach(meals, id: \.self) { meal in
@@ -58,10 +57,10 @@ struct ContentView: View {
                         .pickerStyle(SegmentedPickerStyle())
                     }
                     .padding(.horizontal)
-                    
+
                     // Send button
                     Button("Send Reservation") {
-                    
+                        handleReservation()
                     }
                     .padding()
                     .background(Color.blue)
@@ -76,6 +75,27 @@ struct ContentView: View {
                 Alert(title: Text("Reservation"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
         }
+    }
+
+    // Handles reservation validation and prepares the alert message
+    func handleReservation() {
+        if name.trimmingCharacters(in: .whitespaces).isEmpty {
+            alertMessage = "You need to enter your name."
+        } else if email.trimmingCharacters(in: .whitespaces).isEmpty {
+            alertMessage = "You need to enter your email."
+        } else if phone.trimmingCharacters(in: .whitespaces).isEmpty {
+            alertMessage = "You need to enter your phone number."
+        } else {
+            alertMessage = """
+            Reservation Details:
+            Name: \(name)
+            Email: \(email)
+            Phone: \(phone)
+            Number of People: \(numberOfPeople)
+            Meal: \(selectedMeal)
+            """
+        }
+        showAlert = true
     }
 }
 
