@@ -26,6 +26,26 @@ struct ContentView: View {
                         .scaledToFit()
                         .frame(height: 100)
                         .padding(.bottom, 10)
+                    
+                    // Form fields
+                    VStack(alignment: .leading, spacing: 15) {
+                        TextField("Name", text: $name)
+                            .autocapitalization(.words)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("Email", text: $email)
+                            .keyboardType(.emailAddress)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("Phone", text: $phone)
+                            .keyboardType(.phonePad)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        Picker("Number of People", selection: $numberOfPeople) {
+                            ForEach(1...10, id: \.self) { num in
+                                Text("\(num)")
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
                 }
 
             }
